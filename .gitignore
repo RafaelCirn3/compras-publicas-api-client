@@ -1,5 +1,7 @@
 # Arquivos de ambiente
 .env
+#Documentos
+documents/
 
 # Python
 __pycache__/
