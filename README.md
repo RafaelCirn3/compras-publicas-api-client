@@ -1,40 +1,64 @@
-# Compras Públicas API Client
+# Sistema SaaS RPA - Compras Publicas
 
-Projeto em RPA com o fluxo de URL injection como caminho principal.
+Aplicacao Django com autenticacao, CRUD de filtros e execucao de automacao Selenium via URL injection.
 
-## Estado atual
+## Stack
 
-- `main.py` executa o fluxo principal de URL injection.
-- A camada de API foi removida.
-- O fluxo manual de abertura do site e seleção de filtros pela interface foi removido da execução principal.
-- Os módulos de automação existentes foram preservados para evolução futura.
+- Django Templates
+- AdminLTE (CDN)
+- SQLite
+- Selenium (logica reaproveitada de `src/`)
 
-## Estrutura principal
+## Estrutura
 
 ```text
 compras-publicas-api-client/
-├── main.py
-├── config/
-│   └── settings.py
+├── manage.py
+├── project/
+│   ├── settings.py
+│   └── urls.py
+├── apps/
+│   ├── accounts/
+│   ├── filtros/
+│   └── rpa/
 ├── src/
-│   ├── services/
-│   │   └── url_injection_bot_service.py
-│   └── utils/
-│       ├── filters.py
-│       └── selenium_utils.py
-├── tools/
-│   └── exportar_csv.py
-└── requirements.txt
+│   ├── services/url_injection_bot_service.py
+│   └── utils/selenium_utils.py
+└── tools/exportar_csv.py
 ```
 
-## Configuração
+## Como rodar
 
-O arquivo `.env.example` contém apenas parâmetros gerais e de Selenium.
-
-## Execução
+1. Ative o ambiente virtual.
+2. Instale dependencias:
 
 ```bash
-python main.py
+pip install -r requirements.txt
 ```
 
-O entrypoint atual é apenas uma base neutra para a próxima etapa.
+3. Execute migracoes:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+4. Crie um usuario admin:
+
+```bash
+python manage.py createsuperuser
+```
+
+5. Inicie o servidor:
+
+```bash
+python manage.py runserver
+```
+
+## Fluxo funcional
+
+1. Login em `/accounts/login/`
+2. Criar filtro em `/filtros/novo/`
+3. Executar RPA pelo dashboard
+4. Ver resultados em `/rpa/resultado/`
+5. Exportar CSV na tela de resultados

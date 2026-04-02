@@ -2,34 +2,43 @@
 Módulo de filtros e utilitários
 """
 from typing import List
-from config import settings
 
 
-def contem_palavra(texto: str) -> bool:
+def contem_palavra(texto: str, keywords: list[str] | None = None) -> bool:
     """
-    Verifica se o texto contém alguma das palavras-chave configuradas
+    Verifica se o texto contém alguma das palavras-chave informadas.
     
     Args:
         texto: Texto a ser verificado
+        keywords: Lista de palavras-chave enviadas pelo usuário
         
     Returns:
         True se contém alguma palavra-chave, False caso contrário
     """
+    if not keywords:
+        return False
+
     texto = texto.upper()
-    
-    for palavra in settings.KEYWORDS:
+
+    for palavra in keywords:
         if palavra.upper() in texto:
             return True
     
     return False
 
 
-def filtrar_processos(lista: List[dict]) -> List[dict]:
+def filtrar_processos(
+    lista: List[dict],
+    keywords: list[str] | None = None,
+    status_alvo: str | None = None,
+) -> List[dict]:
     """
-    Filtra processos com base nas palavras-chave e status
+    Filtra processos com base nas palavras-chave e status enviados pelo usuário.
     
     Args:
         lista: Lista de processos para filtrar
+        keywords: Lista de palavras-chave enviadas pelo usuário
+        status_alvo: Status alvo enviado pelo usuário
         
     Returns:
         Lista de processos filtrados
@@ -38,14 +47,16 @@ def filtrar_processos(lista: List[dict]) -> List[dict]:
     
     for processo in lista:
         descricao = processo.get("objeto", "")
-        status = processo.get("situacao", "")
-        
-        # Verifica se o status é o esperado
-        if settings.STATUS_ALVO not in status.upper():
+        status = (processo.get("situacao", "") or "").upper()
+
+        # Só aplica filtro de status quando o usuário informou
+        if status_alvo and status_alvo.upper() not in status:
             continue
-        
-        # Verifica se contém palavras-chave
-        if contem_palavra(descricao):
-            relevantes.append(processo)
+
+        # Só aplica filtro por palavra-chave quando o usuário informou
+        if keywords and not contem_palavra(descricao, keywords=keywords):
+            continue
+
+        relevantes.append(processo)
     
     return relevantes

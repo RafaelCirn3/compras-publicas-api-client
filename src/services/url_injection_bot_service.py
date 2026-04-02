@@ -10,9 +10,9 @@ class UrlInjectionBotService:
 
     def __init__(
         self,
-        uf_codigo: str = "100125",
-        status_codigo: str = "1",
-        objeto: str = "Material Elétrico",
+        uf_codigo: str | None = None,
+        status_codigo: str | None = None,
+        objeto: str | None = None,
         pagina: int = 1
     ):
         self.uf_codigo = uf_codigo

@@ -216,9 +216,9 @@ class SeleniumBot:
     def acessar_processos_com_url_injection(
         self,
         pagina: int = 1,
-        uf: str = "100125",
-        status: str = "1",
-        objeto: str = "Material Elétrico"
+        uf: str | None = None,
+        status: str | None = None,
+        objeto: str | None = None,
     ) -> str:
         """
         Acessa diretamente a listagem de processos usando query params (URL-injection).
@@ -235,12 +235,17 @@ class SeleniumBot:
         try:
             self._log("Montando URL com filtros (URL-injection)...", "INFO")
 
-            params = {
-                "pagina": pagina,
+            params = {"pagina": pagina}
+
+            opcionais = {
                 "uf": uf,
                 "status": status,
-                "objeto": objeto
+                "objeto": objeto,
             }
+            for chave, valor in opcionais.items():
+                if valor is not None and str(valor).strip() != "":
+                    params[chave] = valor
+
             query_string = urlencode(params)
             url = f"{self.url_base}/processos?{query_string}"
 

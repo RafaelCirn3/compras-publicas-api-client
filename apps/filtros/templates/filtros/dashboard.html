@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h3 class="card-title">Filtros cadastrados</h3>
+                <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Novo filtro</a>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Objeto</th>
+                        <th>UF</th>
+                        <th>Status</th>
+                        <th>Criado em</th>
+                        <th>Acoes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for filtro in filtros %}
+                    <tr>
+                        <td>{{ filtro.id }}</td>
+                        <td>{{ filtro.objeto|default:'-' }}</td>
+                        <td>{{ filtro.uf|default:'-' }}</td>
+                        <td>{{ filtro.status|default:'-' }}</td>
+                        <td>{{ filtro.criado_em }}</td>
+                        <td>
+                            <a class="btn btn-info btn-sm" href="{% url 'rpa:executar' filtro.id %}">Executar RPA</a>
+                            <a class="btn btn-secondary btn-sm" href="{% url 'filtros:update' filtro.id %}">Editar</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'filtros:delete' filtro.id %}">Excluir</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6">Nenhum filtro cadastrado.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

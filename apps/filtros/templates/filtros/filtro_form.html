@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 38px;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        padding-top: 6px;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 36px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="card card-primary">
+    <div class="card-header"><h3 class="card-title">{{ titulo }}</h3></div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="card-body">
+            <div class="row">
+                {% for field in form %}
+                <div class="form-group col-md-4">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{% url 'filtros:list' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(function() {
+        const ufSelect = $('#id_uf');
+        const municipioSelect = $('#id_municipio');
+
+        $('.select2-dropdown').select2({
+            width: '100%'
+        });
+
+        function carregarMunicipios(uf, municipioSelecionado) {
+            if (!uf) {
+                municipioSelect.empty();
+                municipioSelect.append($('<option value="">Selecione um município</option>'));
+                municipioSelect.val('').trigger('change.select2');
+                return;
+            }
+
+            $.ajax({
+                url: '{% url "filtros:api_municipios" %}',
+                data: { uf: uf },
+                dataType: 'json'
+            }).done(function(data) {
+                municipioSelect.empty();
+                municipioSelect.append($('<option value="">Selecione um município</option>'));
+
+                data.results.forEach(function(municipio) {
+                    municipioSelect.append($('<option></option>')
+                        .attr('value', municipio.id)
+                        .text(municipio.text)
+                    );
+                });
+
+                if (municipioSelecionado) {
+                    municipioSelect.val(municipioSelecionado).trigger('change.select2');
+                } else {
+                    municipioSelect.val('').trigger('change.select2');
+                }
+            }).fail(function() {
+                municipioSelect.empty();
+                municipioSelect.append($('<option value="">Erro ao carregar municípios</option>'));
+                municipioSelect.val('').trigger('change.select2');
+            });
+        }
+
+        ufSelect.on('change', function() {
+            carregarMunicipios($(this).val(), '');
+        });
+
+        const ufInicial = ufSelect.val();
+        const municipioInicial = municipioSelect.data('selected') || municipioSelect.val() || '';
+        if (ufInicial) {
+            carregarMunicipios(ufInicial, municipioInicial);
+        }
+    });
+</script>
+{% endblock %}

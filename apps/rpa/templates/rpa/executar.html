@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Executar RPA{% endblock %}
+{% block content %}
+<div class="card card-info">
+    <div class="card-header"><h3 class="card-title">Executar RPA</h3></div>
+    <div class="card-body">
+        <p><strong>Filtro selecionado:</strong> {{ filtro }}</p>
+        <ul>
+            <li>Objeto: {{ filtro.objeto|default:'-' }}</li>
+            <li>UF: {{ filtro.uf|default:'-' }}</li>
+            <li>Status: {{ filtro.status|default:'-' }}</li>
+        </ul>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Executar RPA</button>
+            <a href="{% url 'filtros:dashboard' %}" class="btn btn-secondary">Voltar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

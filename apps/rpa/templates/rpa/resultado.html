@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Resultados RPA{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 class="card-title">Resultados da automacao</h3>
+        <a href="{% url 'rpa:exportar_csv' %}" class="btn btn-success btn-sm">Exportar CSV</a>
+    </div>
+    <div class="card-body table-responsive p-0">
+        {% if filtro %}<p class="m-3"><strong>Filtro:</strong> {{ filtro }}</p>{% endif %}
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Numero</th>
+                <th>Orgao</th>
+                <th>Objeto</th>
+                <th>Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for processo in processos %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ processo.numero|default:'-' }}</td>
+                <td>{{ processo.orgao|default:'-' }}</td>
+                <td>{{ processo.objeto|default:'-' }}</td>
+                <td>{{ processo.link|default:'-' }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">Nenhum resultado disponivel.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
