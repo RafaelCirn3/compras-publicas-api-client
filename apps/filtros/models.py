@@ -20,6 +20,10 @@ class Filtros(models.Model):
 
     criado_em = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ["-criado_em"]
+        verbose_name = "Filtro"
+        verbose_name_plural = "Filtros"
     def __str__(self):
         return f"Filtro {self.id} - {self.objeto or 'Sem objeto'}"
 
@@ -39,6 +43,8 @@ class FiltroOpcao(models.Model):
     class Meta:
         unique_together = ("campo", "valor")
         ordering = ["campo", "valor"]
+        verbose_name = "Opção de Filtro"
+        verbose_name_plural = "Opções de Filtro"
 
     def __str__(self):
         return f"{self.campo}: {self.valor}"
