@@ -1,7 +1,15 @@
+from django.conf import settings
 from django.db import models
 
 
 class Filtros(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="filtros",
+        blank=True,
+        null=True,
+    )
     objeto = models.CharField(max_length=255, blank=True, null=True)
     processo = models.CharField(max_length=100, blank=True, null=True)
     orgao = models.CharField(max_length=255, blank=True, null=True)
@@ -24,6 +32,7 @@ class Filtros(models.Model):
         ordering = ["-criado_em"]
         verbose_name = "Filtro"
         verbose_name_plural = "Filtros"
+
     def __str__(self):
         return f"Filtro {self.id} - {self.objeto or 'Sem objeto'}"
 

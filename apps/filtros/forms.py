@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from .models import FiltroOpcao, Filtros
 
@@ -128,3 +129,13 @@ class FiltrosForm(forms.ModelForm):
         for field in self.fields.values():
             existing = field.widget.attrs.get("class", "")
             field.widget.attrs["class"] = (existing + " form-control").strip()
+
+    def clean(self):
+        cleaned_data = super().clean()
+        periodo_inicio = cleaned_data.get("periodo_inicio")
+        periodo_fim = cleaned_data.get("periodo_fim")
+
+        if periodo_inicio and periodo_fim and periodo_inicio > periodo_fim:
+            raise ValidationError("A data inicial não pode ser posterior à data final.")
+
+        return cleaned_data

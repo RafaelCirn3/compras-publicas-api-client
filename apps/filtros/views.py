@@ -8,15 +8,19 @@ from .forms import FiltrosForm
 from .models import Filtros
 
 
+def _filtros_do_usuario(user):
+    return Filtros.objects.filter(user=user).order_by("-criado_em")
+
+
 @login_required
 def dashboard(request):
-    filtros = Filtros.objects.all().order_by("-criado_em")
+    filtros = _filtros_do_usuario(request.user)
     return render(request, "filtros/dashboard.html", {"filtros": filtros})
 
 
 @login_required
 def filtro_list(request):
-    filtros = Filtros.objects.all().order_by("-criado_em")
+    filtros = _filtros_do_usuario(request.user)
     return render(request, "filtros/filtro_list.html", {"filtros": filtros})
 
 
@@ -25,7 +29,9 @@ def filtro_create(request):
     if request.method == "POST":
         form = FiltrosForm(request.POST)
         if form.is_valid():
-            form.save()
+            filtro = form.save(commit=False)
+            filtro.user = request.user
+            filtro.save()
             messages.success(request, "Filtro criado com sucesso.")
             return redirect("filtros:list")
     else:
@@ -35,7 +41,7 @@ def filtro_create(request):
 
 @login_required
 def filtro_update(request, pk):
-    filtro = get_object_or_404(Filtros, pk=pk)
+    filtro = get_object_or_404(Filtros, pk=pk, user=request.user)
     if request.method == "POST":
         form = FiltrosForm(request.POST, instance=filtro)
         if form.is_valid():
@@ -49,7 +55,7 @@ def filtro_update(request, pk):
 
 @login_required
 def filtro_delete(request, pk):
-    filtro = get_object_or_404(Filtros, pk=pk)
+    filtro = get_object_or_404(Filtros, pk=pk, user=request.user)
     if request.method == "POST":
         filtro.delete()
         messages.success(request, "Filtro excluido com sucesso.")
@@ -57,6 +63,7 @@ def filtro_delete(request, pk):
     return render(request, "filtros/filtro_delete.html", {"filtro": filtro})
 
 
+@login_required
 def api_ufs(request):
     """Retorna lista de UFs para autocomplete"""
     ufs_brasil = [
@@ -88,21 +95,22 @@ def api_ufs(request):
         {"sigla": "SE", "nome": "Sergipe"},
         {"sigla": "TO", "nome": "Tocantins"},
     ]
-    
+
     query = request.GET.get("q", "").lower()
     resultados = [uf for uf in ufs_brasil if query in uf["sigla"].lower() or query in uf["nome"].lower()]
-    
+
     return JsonResponse({"results": resultados})
 
 
+@login_required
 def api_municipios(request):
     """Retorna lista de municipios por UF via API do IBGE"""
     uf = request.GET.get("uf", "").upper()
     query = request.GET.get("q", "").lower()
-    
+
     if not uf or len(uf) != 2:
         return JsonResponse({"results": []})
-    
+
     try:
         response = requests.get(
             f"https://servicodados.ibge.gov.br/api/v1/localidades/estados/{uf}/municipios",
@@ -120,5 +128,5 @@ def api_municipios(request):
             return JsonResponse({"results": resultados})
     except Exception as e:
         print(f"Erro ao buscar municipios: {e}")
-    
+
     return JsonResponse({"results": []})

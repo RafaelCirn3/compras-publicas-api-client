@@ -9,7 +9,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 from typing import List, Dict, Any, Optional
 from datetime import datetime
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 
 
 class SeleniumBot:
@@ -476,9 +476,20 @@ class SeleniumBot:
                 # Extrai o link do botão em footer/app-button-pill/button
                 try:
                     botao = article.find_element(By.XPATH, "./footer/app-button-pill/button")
-                    link = botao.get_attribute('routerlink') or botao.get_attribute('href') or "N/A"
+                    link_bruto = botao.get_attribute('routerlink') or botao.get_attribute('href')
+                    if link_bruto:
+                        link_bruto = link_bruto.strip()
+                        parsed_link = urlparse(link_bruto)
+                        if parsed_link.scheme and parsed_link.scheme not in {"http", "https"}:
+                            link = None
+                        elif not parsed_link.scheme and not parsed_link.netloc and not link_bruto.startswith("//"):
+                            link = link_bruto
+                        else:
+                            link = None
+                    else:
+                        link = None
                 except Exception:
-                    link = "N/A"
+                    link = None
 
                 # Tenta extrair número/referência do artigo
                 try:
@@ -501,7 +512,6 @@ class SeleniumBot:
                     'objeto': descricao,
                     'palavraChave': palavra_chave,
                     'link': link,
-                    'html': article.get_attribute('innerHTML')
                 }
 
                 processos_pagina.append(processo)
