@@ -9,6 +9,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 from typing import List, Dict, Any, Optional
 from datetime import datetime
+from urllib.parse import urlencode
 
 
 class SeleniumBot:
@@ -210,6 +211,47 @@ class SeleniumBot:
             self._log(f"Portal carregado: {self.url_base}", "SUCESSO")
         except Exception as e:
             self._log(f"Erro ao acessar portal: {str(e)}", "ERRO")
+            raise
+
+    def acessar_processos_com_url_injection(
+        self,
+        pagina: int = 1,
+        uf: str = "100125",
+        status: str = "1",
+        objeto: str = "Material Elétrico"
+    ) -> str:
+        """
+        Acessa diretamente a listagem de processos usando query params (URL-injection).
+
+        Args:
+            pagina: Número da página inicial
+            uf: Código numérico da UF no portal
+            status: Código numérico do status no portal
+            objeto: Texto do objeto para filtro
+
+        Returns:
+            URL final utilizada na navegação
+        """
+        try:
+            self._log("Montando URL com filtros (URL-injection)...", "INFO")
+
+            params = {
+                "pagina": pagina,
+                "uf": uf,
+                "status": status,
+                "objeto": objeto
+            }
+            query_string = urlencode(params)
+            url = f"{self.url_base}/processos?{query_string}"
+
+            self._log(f"Acessando URL injetada: {url}", "INFO")
+            self.driver.get(url)
+            self._aguardar_estabilizacao_resultados(contexto="acesso por URL-injection", timeout=35)
+
+            self._log("Página de processos carregada via URL-injection", "SUCESSO")
+            return url
+        except Exception as e:
+            self._log(f"Erro ao acessar processos via URL-injection: {str(e)}", "ERRO")
             raise
     
     def aceitar_termos(self) -> None:

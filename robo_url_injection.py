@@ -1,11 +1,13 @@
 """
-Bot RPA principal para busca de processos via URL injection.
+Bot RPA com URL-injection para busca de processos de compras públicas
+Exemplo de URL:
+https://www.portaldecompraspublicas.com.br/processos?pagina=1&uf=100125&status=1&objeto=Material%20El%C3%A9trico
 """
 from src.services.url_injection_bot_service import UrlInjectionBotService
 
 
 def main():
-    """Função principal da aplicação."""
+    """Função principal do bot RPA com URL-injection"""
 
     print("\n")
     print("╔" + "═" * 64 + "╗")
@@ -39,4 +41,4 @@ def main():
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    exit(main())

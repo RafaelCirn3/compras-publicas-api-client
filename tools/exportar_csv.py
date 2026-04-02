@@ -5,7 +5,6 @@ Este é um exemplo de ferramenta auxiliar que pode ser criada na pasta tools/
 import csv
 from datetime import datetime
 from pathlib import Path
-from src.services import ProcessoService
 
 
 def exportar_para_csv(processos: list, nome_arquivo: str = None):
@@ -42,20 +41,7 @@ def main():
     """Exemplo de uso da ferramenta"""
     print("Ferramenta de Exportação de Processos")
     print("-" * 50)
-    
-    servico = ProcessoService()
-    
-    try:
-        resultado = servico.buscar_processos_relevantes()
-        
-        if resultado['quantidade_relevantes'] > 0:
-            exportar_para_csv(resultado['relevantes'])
-            print(f"\n✓ {resultado['quantidade_relevantes']} processos exportados com sucesso!")
-        else:
-            print("\nNenhum processo relevante para exportar.")
-    
-    except Exception as e:
-        print(f"Erro: {str(e)}")
+    print("Forneça uma lista de processos para exportação usando exportar_para_csv().")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 """
 Módulo de configuração do projeto.
-Carrega variáveis de ambiente do arquivo .env
+Carrega variáveis de ambiente do arquivo .env.
 """
 import os
 from pathlib import Path
@@ -20,21 +20,16 @@ except ImportError:
 
 class Settings:
     """Configurações da aplicação"""
-    
-    # Configurações da API
-    API_BASE_URL: str = os.getenv('API_BASE_URL', 'https://apipcp.portaldecompraspublicas.com.br/publico')
-    PUBLIC_KEY: str = os.getenv('PUBLIC_KEY', 'SUA_PUBLIC_KEY_AQUI')
-    
-    # Configurações de busca
+
     UF: str = os.getenv('UF', 'PB')
-    DIAS_BUSCA: int = int(os.getenv('DIAS_BUSCA', '30'))
-    
-    # Filtros
-    KEYWORDS: List[str] = os.getenv('KEYWORDS', 'MATERIAL,ELETRICO').split(',')
+    KEYWORDS: List[str] = [
+        palavra.strip()
+        for palavra in os.getenv('KEYWORDS', 'MATERIAL,ELETRICO').split(',')
+        if palavra.strip()
+    ]
     STATUS_ALVO: str = os.getenv('STATUS_ALVO', 'RECEBENDO PROPOSTAS')
-    
-    # Paginação
-    PAGE_SIZE: int = int(os.getenv('PAGE_SIZE', '1'))
+    SELENIUM_TIMEOUT: int = int(os.getenv('SELENIUM_TIMEOUT', '20'))
+    SELENIUM_IMPLICITLY_WAIT: int = int(os.getenv('SELENIUM_IMPLICITLY_WAIT', '10'))
 
 
 # Instância global das configurações

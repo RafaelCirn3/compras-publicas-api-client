@@ -1,134 +1,40 @@
-# Sistema de Busca de Processos de Compras Públicas
+# Compras Públicas API Client
 
-Sistema para buscar e filtrar processos de compras públicas através da API do Portal de Compras Públicas.
+Projeto em RPA com o fluxo de URL injection como caminho principal.
 
-## 📁 Estrutura do Projeto
+## Estado atual
 
-```
-projeto/
-├── .env                    # Variáveis de ambiente (não commitado)
-├── .env.example            # Exemplo de configuração
-├── .gitignore              # Arquivos ignorados pelo git
-├── requirements.txt        # Dependências Python
-├── README.md               # Este arquivo
-├── main.py                 # Ponto de entrada da aplicação
-│
-├── config/                 # Configurações
-│   ├── __init__.py
-│   └── settings.py         # Gerenciamento de configurações
-│
-├── src/                    # Código fonte
-│   ├── __init__.py
-│   │
-│   ├── api/                # Cliente da API
-│   │   ├── __init__.py
-│   │   └── client.py       # ApiClient
-│   │
-│   ├── services/           # Lógica de negócio
-│   │   ├── __init__.py
-│   │   └── processo_service.py  # ProcessoService
-│   │
-│   └── utils/              # Utilitários
-│       ├── __init__.py
-│       └── filters.py      # Funções de filtragem
-│
-└── tools/                  # Ferramentas auxiliares
-    └── __init__.py
+- `main.py` executa o fluxo principal de URL injection.
+- A camada de API foi removida.
+- O fluxo manual de abertura do site e seleção de filtros pela interface foi removido da execução principal.
+- Os módulos de automação existentes foram preservados para evolução futura.
+
+## Estrutura principal
+
+```text
+compras-publicas-api-client/
+├── main.py
+├── config/
+│   └── settings.py
+├── src/
+│   ├── services/
+│   │   └── url_injection_bot_service.py
+│   └── utils/
+│       ├── filters.py
+│       └── selenium_utils.py
+├── tools/
+│   └── exportar_csv.py
+└── requirements.txt
 ```
 
-## 🚀 Instalação
+## Configuração
 
-1. Clone o repositório:
-```bash
-git clone <url-do-repositorio>
-cd projeto
-```
+O arquivo `.env.example` contém apenas parâmetros gerais e de Selenium.
 
-2. Crie um ambiente virtual:
-```bash
-python -m venv venv
-venv\Scripts\activate  # Windows
-```
-
-3. Instale as dependências:
-```bash
-pip install -r requirements.txt
-```
-
-4. Configure as variáveis de ambiente:
-   - Copie o arquivo `.env.example` para `.env`
-   - Edite o arquivo `.env` e adicione sua `PUBLIC_KEY`
-
-```bash
-copy .env.example .env
-```
-
-## ⚙️ Configuração
-
-Edite o arquivo `.env` com suas configurações:
-
-```env
-# Configurações da API
-API_BASE_URL=https://apipcp.portaldecompraspublicas.com.br/publico
-PUBLIC_KEY=SUA_CHAVE_AQUI
-
-# Configurações de Busca
-UF=PB
-DIAS_BUSCA=30
-
-# Filtros
-KEYWORDS=MATERIAL,ELETRICO
-STATUS_ALVO=RECEBENDO PROPOSTAS
-
-# Paginação
-PAGE_SIZE=1
-```
-
-### Parâmetros configuráveis:
-
-- **PUBLIC_KEY**: Sua chave de acesso à API
-- **UF**: Unidade Federativa para busca (ex: PB, SP, RJ)
-- **DIAS_BUSCA**: Número de dias retroativos para buscar processos
-- **KEYWORDS**: Palavras-chave separadas por vírgula para filtrar processos
-- **STATUS_ALVO**: Status dos processos a serem filtrados
-
-## 📖 Uso
-
-Execute o programa:
+## Execução
 
 ```bash
 python main.py
 ```
 
-O sistema irá:
-1. Buscar processos nos últimos X dias (configurável)
-2. Filtrar processos que contenham as palavras-chave
-3. Filtrar apenas processos com status "RECEBENDO PROPOSTAS"
-4. Exibir os resultados
-
-## 📦 Módulos
-
-### config/
-Gerenciamento de configurações usando variáveis de ambiente
-
-### src/api/
-Cliente para comunicação com a API do Portal de Compras Públicas
-
-### src/services/
-Lógica de negócio da aplicação
-
-### src/utils/
-Funções utilitárias e filtros
-
-### tools/
-Ferramentas auxiliares e scripts
-
-## 🛠️ Tecnologias
-
-- Python 3.8+
-- requests - Cliente HTTP
-- python-dotenv - Gerenciamento de variáveis de ambiente
-
-## 📝 Licença
-
-Este projeto é de uso interno.
+O entrypoint atual é apenas uma base neutra para a próxima etapa.

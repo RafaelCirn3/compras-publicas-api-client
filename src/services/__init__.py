@@ -1,5 +1,4 @@
 """Módulo de serviços"""
-from .processo_service import ProcessoService
-from .bot_service import BotService
+from .url_injection_bot_service import UrlInjectionBotService
 
-__all__ = ['ProcessoService', 'BotService']
+__all__ = ['UrlInjectionBotService']

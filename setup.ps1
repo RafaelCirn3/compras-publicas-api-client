@@ -56,8 +56,6 @@ else {
     Write-Host "  Criando .env a partir de .env.example..." -ForegroundColor Gray
     Copy-Item .env.example .env
     Write-Host "  [OK] Arquivo .env criado" -ForegroundColor Green
-    Write-Host ""
-    Write-Host "  [ATENCAO] Configure sua PUBLIC_KEY no arquivo .env" -ForegroundColor Yellow
 }
 
 Write-Host ""
@@ -67,7 +65,7 @@ Write-Host "============================================================" -Foreg
 
 Write-Host ""
 Write-Host "Proximos passos:" -ForegroundColor White
-Write-Host "  1. Edite o arquivo .env e configure sua PUBLIC_KEY" -ForegroundColor Gray
+Write-Host "  1. Revise o arquivo .env se quiser ajustar UF, KEYWORDS ou STATUS_ALVO" -ForegroundColor Gray
 Write-Host "  2. Ative o ambiente virtual: venv\Scripts\activate" -ForegroundColor Gray
 Write-Host "  3. Execute o programa: python main.py" -ForegroundColor Gray
 Write-Host ""
