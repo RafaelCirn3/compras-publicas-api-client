@@ -1,34 +1,63 @@
 {% extends 'base.html' %}
 {% block title %}Filtros{% endblock %}
 {% block content %}
-<div class="card">
-    <div class="card-header d-flex justify-content-between">
-        <h3 class="card-title">Lista de filtros</h3>
+<section class="surface">
+    <div class="surface-header">
+        <div>
+            <h1 class="page-title h5 mb-0">Meus filtros</h1>
+            <p class="page-subtitle small">Organize e execute filtros com um clique.</p>
+        </div>
         <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Novo filtro</a>
     </div>
-    <div class="card-body table-responsive p-0">
-        <table class="table table-striped">
-            <thead>
-            <tr><th>ID</th><th>Objeto</th><th>UF</th><th>Status</th><th>Acoes</th></tr>
-            </thead>
-            <tbody>
-            {% for filtro in filtros %}
-            <tr>
-                <td>{{ filtro.id }}</td>
-                <td>{{ filtro.objeto|default:'-' }}</td>
-                <td>{{ filtro.uf|default:'-' }}</td>
-                <td>{{ filtro.status|default:'-' }}</td>
-                <td>
-                    <a class="btn btn-info btn-sm" href="{% url 'rpa:executar' filtro.id %}">Executar</a>
-                    <a class="btn btn-secondary btn-sm" href="{% url 'filtros:update' filtro.id %}">Editar</a>
-                    <a class="btn btn-danger btn-sm" href="{% url 'filtros:delete' filtro.id %}">Excluir</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="5">Nenhum filtro cadastrado.</td></tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <div class="surface-body p-0">
+        {% if filtros %}
+        <div class="table-wrap">
+            <table class="table-modern">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Objeto</th>
+                    <th>UF</th>
+                    <th>Status</th>
+                    <th>Criado em</th>
+                    <th>Acoes</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for filtro in filtros %}
+                <tr>
+                    <td>#{{ filtro.id }}</td>
+                    <td>{{ filtro.objeto|default:'-' }}</td>
+                    <td><span class="badge-soft">{{ filtro.uf|default:'-' }}</span></td>
+                    <td>{{ filtro.status|default:'-' }}</td>
+                    <td>{{ filtro.criado_em|date:'d/m/Y H:i' }}</td>
+                    <td>
+                        <div class="action-row">
+                            <a class="icon-btn" href="{% url 'rpa:executar' filtro.id %}" title="Executar RPA">
+                                <i class="bi bi-play-fill"></i>
+                            </a>
+                            <a class="icon-btn" href="{% url 'filtros:update' filtro.id %}" title="Editar filtro">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a class="icon-btn" href="{% url 'filtros:delete' filtro.id %}" title="Excluir filtro">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="surface-body">
+            <div class="empty-state">
+                <i class="bi bi-funnel"></i>
+                <p class="mb-2">Nenhum filtro encontrado.</p>
+                <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Criar filtro</a>
+            </div>
+        </div>
+        {% endif %}
     </div>
-</div>
+</section>
 {% endblock %}

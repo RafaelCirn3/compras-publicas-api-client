@@ -1,20 +1,37 @@
 {% extends 'base.html' %}
 {% block title %}Executar RPA{% endblock %}
 {% block content %}
-<div class="card card-info">
-    <div class="card-header"><h3 class="card-title">Executar RPA</h3></div>
-    <div class="card-body">
-        <p><strong>Filtro selecionado:</strong> {{ filtro }}</p>
-        <ul>
-            <li>Objeto: {{ filtro.objeto|default:'-' }}</li>
-            <li>UF: {{ filtro.uf|default:'-' }}</li>
-            <li>Status: {{ filtro.status|default:'-' }}</li>
-        </ul>
+<section class="surface" style="max-width: 860px;">
+    <div class="surface-header">
+        <h1 class="page-title h5 mb-0">Executar RPA</h1>
+    </div>
+    <div class="surface-body">
+        <p class="page-subtitle mb-3">Confirme os dados e inicie a automacao.</p>
+
+        <div class="form-grid mb-4">
+            <div>
+                <p class="text-muted mb-1">Filtro</p>
+                <p class="mb-0 fw-semibold">{{ filtro }}</p>
+            </div>
+            <div>
+                <p class="text-muted mb-1">Objeto</p>
+                <p class="mb-0">{{ filtro.objeto|default:'-' }}</p>
+            </div>
+            <div>
+                <p class="text-muted mb-1">UF</p>
+                <p class="mb-0">{{ filtro.uf|default:'-' }}</p>
+            </div>
+            <div>
+                <p class="text-muted mb-1">Status</p>
+                <p class="mb-0">{{ filtro.status|default:'-' }}</p>
+            </div>
+        </div>
+
         <form method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Executar RPA</button>
-            <a href="{% url 'filtros:dashboard' %}" class="btn btn-secondary">Voltar</a>
+            <button type="submit" class="btn btn-primary">Executar agora</button>
+            <a href="{% url 'filtros:dashboard' %}" class="btn btn-outline-secondary">Voltar</a>
         </form>
     </div>
-</div>
+</section>
 {% endblock %}

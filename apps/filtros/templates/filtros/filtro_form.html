@@ -2,46 +2,139 @@
 {% block title %}{{ titulo }}{% endblock %}
 {% block extra_css %}
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<style>
-    .select2-container--default .select2-selection--single {
-        height: 38px;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        padding-top: 6px;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 36px;
-    }
-</style>
 {% endblock %}
 {% block content %}
-<div class="card card-primary">
-    <div class="card-header"><h3 class="card-title">{{ titulo }}</h3></div>
-    <form method="post">
+<section class="surface">
+    <div class="surface-header">
+        <div>
+            <h1 class="page-title h5 mb-0">{{ titulo }}</h1>
+            <p class="page-subtitle small">Defina filtros precisos para ganhar produtividade na busca.</p>
+        </div>
+    </div>
+    <div class="surface-body">
+    <form method="post" data-form-stepper>
         {% csrf_token %}
-        <div class="card-body">
-            <div class="row">
-                {% for field in form %}
-                <div class="form-group col-md-4">
-                    <label>{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}
+        <div class="stepper-track" aria-label="Etapas do formulário">
+            <div class="step-chip" data-step-chip><strong>1</strong><span>Dados gerais</span></div>
+            <div class="step-chip" data-step-chip><strong>2</strong><span>Localização</span></div>
+            <div class="step-chip" data-step-chip><strong>3</strong><span>Classificação</span></div>
+            <div class="step-chip" data-step-chip><strong>4</strong><span>Período</span></div>
+        </div>
+
+        <section class="step-panel" data-step-panel>
+            <div class="form-grid">
+                <h2 class="form-section-title">Dados gerais</h2>
+                <div class="field-span-2">
+                    <label class="form-label" for="{{ form.objeto.id_for_label }}">{{ form.objeto.label }}</label>
+                    {{ form.objeto }}
+                    {% if form.objeto.errors %}<div class="text-danger small mt-1">{{ form.objeto.errors|striptags }}</div>{% endif %}
                 </div>
-                {% endfor %}
+                <div>
+                    <label class="form-label" for="{{ form.processo.id_for_label }}">{{ form.processo.label }}</label>
+                    {{ form.processo }}
+                    {% if form.processo.errors %}<div class="text-danger small mt-1">{{ form.processo.errors|striptags }}</div>{% endif %}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.orgao.id_for_label }}">{{ form.orgao.label }}</label>
+                    {{ form.orgao }}
+                    {% if form.orgao.errors %}<div class="text-danger small mt-1">{{ form.orgao.errors|striptags }}</div>{% endif %}
+                </div>
             </div>
-        </div>
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <a href="{% url 'filtros:list' %}" class="btn btn-secondary">Cancelar</a>
-        </div>
+            <div class="step-actions">
+                <span class="text-muted small">Etapa 1 de 4</span>
+                <div class="right">
+                    <button class="btn btn-primary" type="button" data-step-next>Próximo</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="step-panel" data-step-panel>
+            <div class="form-grid">
+                <h2 class="form-section-title">Localização</h2>
+                <div>
+                    <label class="form-label" for="{{ form.uf.id_for_label }}">{{ form.uf.label }}</label>
+                    {{ form.uf }}
+                    {% if form.uf.errors %}<div class="text-danger small mt-1">{{ form.uf.errors|striptags }}</div>{% endif %}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.municipio.id_for_label }}">{{ form.municipio.label }}</label>
+                    {{ form.municipio }}
+                    {% if form.municipio.errors %}<div class="text-danger small mt-1">{{ form.municipio.errors|striptags }}</div>{% endif %}
+                </div>
+            </div>
+            <div class="step-actions">
+                <span class="text-muted small">Etapa 2 de 4</span>
+                <div class="right">
+                    <button class="btn btn-outline-secondary" type="button" data-step-prev>Voltar</button>
+                    <button class="btn btn-primary" type="button" data-step-next>Próximo</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="step-panel" data-step-panel>
+            <div class="form-grid">
+                <h2 class="form-section-title">Classificação</h2>
+                <div>
+                    <label class="form-label" for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                    {{ form.status }}
+                    {% if form.status.errors %}<div class="text-danger small mt-1">{{ form.status.errors|striptags }}</div>{% endif %}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.modalidade.id_for_label }}">{{ form.modalidade.label }}</label>
+                    {{ form.modalidade }}
+                    {% if form.modalidade.errors %}<div class="text-danger small mt-1">{{ form.modalidade.errors|striptags }}</div>{% endif %}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.realizacao.id_for_label }}">{{ form.realizacao.label }}</label>
+                    {{ form.realizacao }}
+                    {% if form.realizacao.errors %}<div class="text-danger small mt-1">{{ form.realizacao.errors|striptags }}</div>{% endif %}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.julgamento.id_for_label }}">{{ form.julgamento.label }}</label>
+                    {{ form.julgamento }}
+                    {% if form.julgamento.errors %}<div class="text-danger small mt-1">{{ form.julgamento.errors|striptags }}</div>{% endif %}
+                </div>
+            </div>
+            <div class="step-actions">
+                <span class="text-muted small">Etapa 3 de 4</span>
+                <div class="right">
+                    <button class="btn btn-outline-secondary" type="button" data-step-prev>Voltar</button>
+                    <button class="btn btn-primary" type="button" data-step-next>Próximo</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="step-panel" data-step-panel>
+            <div class="form-grid">
+                <h2 class="form-section-title">Período</h2>
+                <div>
+                    <label class="form-label" for="{{ form.periodo_inicio.id_for_label }}">{{ form.periodo_inicio.label }}</label>
+                    {{ form.periodo_inicio }}
+                    {% if form.periodo_inicio.errors %}<div class="text-danger small mt-1">{{ form.periodo_inicio.errors|striptags }}</div>{% endif %}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.periodo_fim.id_for_label }}">{{ form.periodo_fim.label }}</label>
+                    {{ form.periodo_fim }}
+                    {% if form.periodo_fim.errors %}<div class="text-danger small mt-1">{{ form.periodo_fim.errors|striptags }}</div>{% endif %}
+                </div>
+            </div>
+            <div class="step-actions">
+                <span class="text-muted small">Etapa 4 de 4</span>
+                <div class="right">
+                    <button class="btn btn-outline-secondary" type="button" data-step-prev>Voltar</button>
+                    <button type="submit" class="btn btn-primary">Salvar filtro</button>
+                    <a href="{% url 'filtros:list' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </section>
     </form>
-</div>
+    </div>
+</section>
 
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(function() {

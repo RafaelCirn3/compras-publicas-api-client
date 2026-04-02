@@ -1,37 +1,55 @@
 {% extends 'base.html' %}
 {% block title %}Resultados RPA{% endblock %}
 {% block content %}
-<div class="card">
-    <div class="card-header d-flex justify-content-between">
-        <h3 class="card-title">Resultados da automacao</h3>
+<section class="surface">
+    <div class="surface-header">
+        <div>
+            <h1 class="page-title h5 mb-0">Resultados da automacao</h1>
+            {% if filtro %}<p class="page-subtitle small mb-0">Filtro aplicado: {{ filtro }}</p>{% endif %}
+        </div>
         <a href="{% url 'rpa:exportar_csv' %}" class="btn btn-success btn-sm">Exportar CSV</a>
     </div>
-    <div class="card-body table-responsive p-0">
-        {% if filtro %}<p class="m-3"><strong>Filtro:</strong> {{ filtro }}</p>{% endif %}
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Numero</th>
-                <th>Orgao</th>
-                <th>Objeto</th>
-                <th>Link</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for processo in processos %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ processo.numero|default:'-' }}</td>
-                <td>{{ processo.orgao|default:'-' }}</td>
-                <td>{{ processo.objeto|default:'-' }}</td>
-                <td>{{ processo.link|default:'-' }}</td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="5">Nenhum resultado disponivel.</td></tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <div class="surface-body p-0">
+        {% if processos %}
+        <div class="table-wrap">
+            <table class="table-modern">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Numero</th>
+                    <th>Orgao</th>
+                    <th>Objeto</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for processo in processos %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ processo.numero|default:'-' }}</td>
+                    <td><span class="badge-soft">{{ processo.orgao|default:'-' }}</span></td>
+                    <td>{{ processo.objeto|default:'-' }}</td>
+                    <td>
+                        {% if processo.link %}
+                        <a href="{{ processo.link }}" target="_blank" rel="noopener noreferrer">Abrir processo</a>
+                        {% else %}
+                        -
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="surface-body">
+            <div class="empty-state">
+                <i class="bi bi-search"></i>
+                <p class="mb-1">Nenhum resultado encontrado.</p>
+                <p class="small mb-0">Execute um filtro para visualizar processos aqui.</p>
+            </div>
+        </div>
+        {% endif %}
     </div>
-</div>
+</section>
 {% endblock %}
