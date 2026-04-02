@@ -23,7 +23,7 @@
 
         <section class="step-panel" data-step-panel>
             <div class="form-grid">
-                <h2 class="form-section-title">O que você quer comprar?</h2>
+                <h2 class="form-section-title">O que você procura?</h2>
                 <div class="field-span-2">
                     <label class="form-label" for="{{ form.objeto.id_for_label }}">{{ form.objeto.label }}</label>
                     {{ form.objeto }}
@@ -33,7 +33,7 @@
                 <div>
                     <label class="form-label" for="{{ form.processo.id_for_label }}">{{ form.processo.label }}</label>
                     {{ form.processo }}
-                    <p class="field-helper">Opcional: informe um numero de referencia se quiser acompanhar um caso especifico.</p>
+                    <p class="field-helper">Opcional: informe um numero de referência se quiser acompanhar um caso específico.</p>
                     {% if form.processo.errors %}<div class="text-danger small mt-1">{{ form.processo.errors|striptags }}</div>{% endif %}
                 </div>
                 <div>

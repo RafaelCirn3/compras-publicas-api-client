@@ -15,22 +15,18 @@
             <table class="table-modern">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Perfil</th>
                     <th>UF</th>
                     <th>Tipo de oportunidade</th>
-                    <th>Criado em</th>
                     <th>Acoes</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for filtro in filtros %}
                 <tr>
-                    <td>#{{ filtro.id }}</td>
                     <td>{{ filtro.objeto|default:'-' }}</td>
                     <td><span class="badge-soft">{{ filtro.uf|default:'-' }}</span></td>
                     <td>{{ filtro.status|default:'-' }}</td>
-                    <td>{{ filtro.criado_em|date:'d/m/Y H:i' }}</td>
                     <td>
                         <div class="action-row">
                             <a class="icon-btn" href="{% url 'rpa:executar' filtro.id %}" title="Buscar oportunidades">
