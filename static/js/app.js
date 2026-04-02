@@ -16,9 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            const loadingText = submitBtn.dataset.loadingText || "Processando...";
             submitBtn.dataset.originalText = submitBtn.innerHTML;
             submitBtn.disabled = true;
-            submitBtn.innerHTML = "<span class='spinner-border spinner-border-sm me-2' aria-hidden='true'></span>Processando...";
+            submitBtn.innerHTML = `<span class='spinner-border spinner-border-sm me-2' aria-hidden='true'></span>${loadingText}`;
         });
     });
 

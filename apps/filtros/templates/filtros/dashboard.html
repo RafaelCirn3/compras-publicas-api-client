@@ -2,28 +2,32 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 <section class="mb-4">
-    <h1 class="page-title">Dashboard</h1>
-    <p class="page-subtitle">Visao geral dos seus filtros e das ultimas atividades.</p>
+    <h1 class="page-title">Oportunidades sob medida para você</h1>
+    <p class="page-subtitle">Baseado no seu perfil de busca, o sistema trabalha para reduzir seu tempo de pesquisa.</p>
 </section>
 
 <section class="metric-grid">
     <article class="metric-card">
-        <p class="metric-label mb-0">Total de filtros</p>
+        <p class="metric-label mb-0">Perfis criados</p>
         <p class="metric-value">{{ filtros|length }}</p>
     </article>
     <article class="metric-card">
-        <p class="metric-label mb-0">Ultimas execucoes</p>
+        <p class="metric-label mb-0">Últimas buscas</p>
         <p class="metric-value">{{ filtros|slice:':5'|length }}</p>
+    </article>
+    <article class="metric-card">
+        <p class="metric-label mb-0">Oportunidades encontradas</p>
+        <p class="metric-value">{{ request.session.ultimo_resultado|default:''|length }}</p>
     </article>
 </section>
 
 <section class="surface">
     <div class="surface-header">
         <div>
-            <h2 class="page-title h5 mb-0">Filtros recentes</h2>
-            <p class="page-subtitle small">Acompanhe e execute rapidamente seus filtros.</p>
+            <h2 class="page-title h5 mb-0">Perfis mais recentes</h2>
+            <p class="page-subtitle small">Ajuste seus critérios e encontre novas oportunidades com um clique.</p>
         </div>
-        <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Novo filtro</a>
+        <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Criar novo perfil</a>
     </div>
     <div class="surface-body p-0">
         {% if filtros %}
@@ -32,11 +36,11 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Objeto</th>
+                    <th>Perfil</th>
                     <th>UF</th>
-                    <th>Status</th>
+                    <th>Tipo de oportunidade</th>
                     <th>Criado em</th>
-                    <th>Acoes</th>
+                    <th>Atalhos</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,7 +53,7 @@
                     <td>{{ filtro.criado_em|date:'d/m/Y H:i' }}</td>
                     <td>
                         <div class="action-row">
-                            <a class="icon-btn" href="{% url 'rpa:executar' filtro.id %}" title="Executar">
+                            <a class="icon-btn" href="{% url 'rpa:executar' filtro.id %}" title="Buscar oportunidades">
                                 <i class="bi bi-play-fill"></i>
                             </a>
                             <a class="icon-btn" href="{% url 'filtros:update' filtro.id %}" title="Editar">
@@ -69,8 +73,8 @@
         <div class="surface-body">
             <div class="empty-state">
                 <i class="bi bi-inbox"></i>
-                <p class="mb-2">Nenhum filtro cadastrado ainda.</p>
-                <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Criar primeiro filtro</a>
+                <p class="mb-2">Você ainda não criou um perfil de busca.</p>
+                <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Criar primeiro perfil</a>
             </div>
         </div>
         {% endif %}

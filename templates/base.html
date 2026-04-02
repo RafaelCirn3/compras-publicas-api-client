@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}RPA Licitacoes{% endblock %}</title>
+    <title>{% block title %}Radar de Licitações{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,26 +17,26 @@
 <div class="app-shell" data-sidebar-state="open">
     <aside class="app-sidebar" id="appSidebar" aria-label="Menu principal">
         <div class="brand-zone">
-            <a href="{% url 'filtros:dashboard' %}" class="brand-link">Procurei SaaS</a>
-            <p class="brand-subtitle">Gestao de licitacoes</p>
+            <a href="{% url 'filtros:dashboard' %}" class="brand-link">Radar de Licitações</a>
+            <p class="brand-subtitle">Seu radar inteligente de licitações</p>
         </div>
 
         <nav class="sidebar-nav">
             <a href="{% url 'filtros:dashboard' %}" class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                 <i class="bi bi-grid-1x2"></i>
-                <span>Dashboard</span>
+                <span>Visão geral</span>
             </a>
             <a href="{% url 'filtros:list' %}" class="nav-item {% if request.resolver_match.url_name == 'list' %}active{% endif %}">
                 <i class="bi bi-funnel"></i>
-                <span>Meus Filtros</span>
+                <span>Perfis de busca</span>
             </a>
             <a href="{% url 'filtros:create' %}" class="nav-item {% if request.resolver_match.url_name == 'create' %}active{% endif %}">
                 <i class="bi bi-plus-circle"></i>
-                <span>Novo Filtro</span>
+                <span>Criar perfil</span>
             </a>
             <a href="{% url 'rpa:resultado' %}" class="nav-item {% if request.resolver_match.url_name == 'resultado' %}active{% endif %}">
                 <i class="bi bi-table"></i>
-                <span>Resultados</span>
+                <span>Oportunidades</span>
             </a>
         </nav>
     </aside>
@@ -48,11 +48,11 @@
             </button>
 
             <div class="topbar-right">
-                <button class="icon-ghost" type="button" aria-label="Notificacoes">
+                <button class="icon-ghost" type="button" aria-label="Alertas e notificações">
                     <i class="bi bi-bell"></i>
                 </button>
                 {% if request.user.is_authenticated %}
-                <div class="user-chip" aria-label="Usuario logado">
+                <div class="user-chip" aria-label="Usuário logado">
                     <span class="user-avatar">{{ request.user.first_name|default:request.user.username|slice:':1'|upper }}</span>
                     <span>{{ request.user.get_full_name|default:request.user.username }}</span>
                 </div>

@@ -195,13 +195,15 @@ a {
 
 .page-title {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
     font-weight: 800;
+    letter-spacing: -0.02em;
 }
 
 .page-subtitle {
     margin: 0.25rem 0 0;
     color: var(--muted);
+    max-width: 68ch;
 }
 
 .metric-grid {
@@ -216,6 +218,7 @@ a {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1rem;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
 }
 
 .metric-label {
@@ -288,6 +291,11 @@ a {
 .icon-btn:hover {
     background: #f8fafc;
     color: #0f172a;
+}
+
+.icon-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
 }
 
 .form-grid {
@@ -400,6 +408,13 @@ a {
 .form-label {
     font-weight: 700;
     font-size: 0.86rem;
+}
+
+.field-helper {
+    margin: 0.4rem 0 0;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.35;
 }
 
 .form-control,

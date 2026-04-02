@@ -7,36 +7,39 @@
 <section class="surface">
     <div class="surface-header">
         <div>
-            <h1 class="page-title h5 mb-0">{{ titulo }}</h1>
-            <p class="page-subtitle small">Defina filtros precisos para ganhar produtividade na busca.</p>
+            <h1 class="page-title h5 mb-0">Monte seu perfil de busca</h1>
+            <p class="page-subtitle small">Em poucos passos, você configura como a plataforma vai encontrar oportunidades para você.</p>
         </div>
     </div>
     <div class="surface-body">
     <form method="post" data-form-stepper>
         {% csrf_token %}
         <div class="stepper-track" aria-label="Etapas do formulário">
-            <div class="step-chip" data-step-chip><strong>1</strong><span>Dados gerais</span></div>
-            <div class="step-chip" data-step-chip><strong>2</strong><span>Localização</span></div>
-            <div class="step-chip" data-step-chip><strong>3</strong><span>Classificação</span></div>
+            <div class="step-chip" data-step-chip><strong>1</strong><span>O que buscar</span></div>
+            <div class="step-chip" data-step-chip><strong>2</strong><span>Onde buscar</span></div>
+            <div class="step-chip" data-step-chip><strong>3</strong><span>Perfil da licitação</span></div>
             <div class="step-chip" data-step-chip><strong>4</strong><span>Período</span></div>
         </div>
 
         <section class="step-panel" data-step-panel>
             <div class="form-grid">
-                <h2 class="form-section-title">Dados gerais</h2>
+                <h2 class="form-section-title">O que você quer comprar?</h2>
                 <div class="field-span-2">
                     <label class="form-label" for="{{ form.objeto.id_for_label }}">{{ form.objeto.label }}</label>
                     {{ form.objeto }}
+                    <p class="field-helper">Descreva com clareza o item ou serviço para melhorar a precisão das oportunidades.</p>
                     {% if form.objeto.errors %}<div class="text-danger small mt-1">{{ form.objeto.errors|striptags }}</div>{% endif %}
                 </div>
                 <div>
                     <label class="form-label" for="{{ form.processo.id_for_label }}">{{ form.processo.label }}</label>
                     {{ form.processo }}
+                    <p class="field-helper">Opcional: informe um numero de referencia se quiser acompanhar um caso especifico.</p>
                     {% if form.processo.errors %}<div class="text-danger small mt-1">{{ form.processo.errors|striptags }}</div>{% endif %}
                 </div>
                 <div>
                     <label class="form-label" for="{{ form.orgao.id_for_label }}">{{ form.orgao.label }}</label>
                     {{ form.orgao }}
+                    <p class="field-helper">Opcional: limite por órgão para receber oportunidades mais direcionadas.</p>
                     {% if form.orgao.errors %}<div class="text-danger small mt-1">{{ form.orgao.errors|striptags }}</div>{% endif %}
                 </div>
             </div>
@@ -50,15 +53,17 @@
 
         <section class="step-panel" data-step-panel>
             <div class="form-grid">
-                <h2 class="form-section-title">Localização</h2>
+                <h2 class="form-section-title">Onde deseja atuar?</h2>
                 <div>
                     <label class="form-label" for="{{ form.uf.id_for_label }}">{{ form.uf.label }}</label>
                     {{ form.uf }}
+                    <p class="field-helper">Escolha o estado para priorizar oportunidades da sua área de interesse.</p>
                     {% if form.uf.errors %}<div class="text-danger small mt-1">{{ form.uf.errors|striptags }}</div>{% endif %}
                 </div>
                 <div>
                     <label class="form-label" for="{{ form.municipio.id_for_label }}">{{ form.municipio.label }}</label>
                     {{ form.municipio }}
+                    <p class="field-helper">Opcional: refine por municipio para resultados ainda mais relevantes.</p>
                     {% if form.municipio.errors %}<div class="text-danger small mt-1">{{ form.municipio.errors|striptags }}</div>{% endif %}
                 </div>
             </div>
@@ -73,25 +78,29 @@
 
         <section class="step-panel" data-step-panel>
             <div class="form-grid">
-                <h2 class="form-section-title">Classificação</h2>
+                <h2 class="form-section-title">Como a licitação deve ser?</h2>
                 <div>
                     <label class="form-label" for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
                     {{ form.status }}
+                    <p class="field-helper">Defina o momento da oportunidade (ex.: abertas para proposta).</p>
                     {% if form.status.errors %}<div class="text-danger small mt-1">{{ form.status.errors|striptags }}</div>{% endif %}
                 </div>
                 <div>
                     <label class="form-label" for="{{ form.modalidade.id_for_label }}">{{ form.modalidade.label }}</label>
                     {{ form.modalidade }}
+                    <p class="field-helper">Escolha o tipo de modalidade para focar no seu perfil de compra.</p>
                     {% if form.modalidade.errors %}<div class="text-danger small mt-1">{{ form.modalidade.errors|striptags }}</div>{% endif %}
                 </div>
                 <div>
                     <label class="form-label" for="{{ form.realizacao.id_for_label }}">{{ form.realizacao.label }}</label>
                     {{ form.realizacao }}
+                    <p class="field-helper">Filtre pela forma de realização para combinar com sua operação.</p>
                     {% if form.realizacao.errors %}<div class="text-danger small mt-1">{{ form.realizacao.errors|striptags }}</div>{% endif %}
                 </div>
                 <div>
                     <label class="form-label" for="{{ form.julgamento.id_for_label }}">{{ form.julgamento.label }}</label>
                     {{ form.julgamento }}
+                    <p class="field-helper">Selecione o criterio de julgamento que faz sentido para seu negocio.</p>
                     {% if form.julgamento.errors %}<div class="text-danger small mt-1">{{ form.julgamento.errors|striptags }}</div>{% endif %}
                 </div>
             </div>
@@ -106,15 +115,17 @@
 
         <section class="step-panel" data-step-panel>
             <div class="form-grid">
-                <h2 class="form-section-title">Período</h2>
+                <h2 class="form-section-title">Período de interesse</h2>
                 <div>
                     <label class="form-label" for="{{ form.periodo_inicio.id_for_label }}">{{ form.periodo_inicio.label }}</label>
                     {{ form.periodo_inicio }}
+                    <p class="field-helper">Data inicial para considerar apenas oportunidades dentro da sua janela.</p>
                     {% if form.periodo_inicio.errors %}<div class="text-danger small mt-1">{{ form.periodo_inicio.errors|striptags }}</div>{% endif %}
                 </div>
                 <div>
                     <label class="form-label" for="{{ form.periodo_fim.id_for_label }}">{{ form.periodo_fim.label }}</label>
                     {{ form.periodo_fim }}
+                    <p class="field-helper">Data final para concluir o recorte de oportunidades desejadas.</p>
                     {% if form.periodo_fim.errors %}<div class="text-danger small mt-1">{{ form.periodo_fim.errors|striptags }}</div>{% endif %}
                 </div>
             </div>
@@ -122,7 +133,7 @@
                 <span class="text-muted small">Etapa 4 de 4</span>
                 <div class="right">
                     <button class="btn btn-outline-secondary" type="button" data-step-prev>Voltar</button>
-                    <button type="submit" class="btn btn-primary">Salvar filtro</button>
+                    <button type="submit" class="btn btn-primary" data-loading-text="Buscando oportunidades para você...">Buscar oportunidades agora</button>
                     <a href="{% url 'filtros:list' %}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>

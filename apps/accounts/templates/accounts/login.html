@@ -2,8 +2,8 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 <section class="auth-card">
-    <h2>Entrar na plataforma</h2>
-    <p>Acesse seus filtros e resultados em um painel rapido e organizado.</p>
+    <h2>Acesse seu Radar de Licitações</h2>
+    <p>Deixe o sistema encontrar as melhores licitações para você.</p>
 
     <form method="post" novalidate>
         {% csrf_token %}
@@ -16,14 +16,14 @@
             <input id="id_password" type="password" name="password" class="form-control" placeholder="Digite sua senha" required>
         </div>
         {% if form.errors %}
-        <div class="feedback feedback-danger mb-3">Usuario ou senha invalidos.</div>
+        <div class="feedback feedback-danger mb-3">Usuário ou senha inválidos.</div>
         {% endif %}
-        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        <button type="submit" class="btn btn-primary w-100" data-loading-text="Entrando na sua central...">Entrar</button>
     </form>
 
     <div class="auth-footer">
         <p class="mb-1"><a href="{% url 'accounts:password_reset' %}">Esqueceu a senha?</a></p>
-        <p class="mb-0">Nao tem conta? <a href="{% url 'accounts:register' %}">Criar agora</a></p>
+        <p class="mb-0">Não tem conta? <a href="{% url 'accounts:register' %}">Criar agora</a></p>
     </div>
 </section>
 {% endblock %}

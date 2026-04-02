@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
-{% block title %}Resultados RPA{% endblock %}
+{% block title %}Oportunidades encontradas{% endblock %}
 {% block content %}
 <section class="surface">
     <div class="surface-header">
         <div>
-            <h1 class="page-title h5 mb-0">Resultados da automacao</h1>
-            {% if filtro %}<p class="page-subtitle small mb-0">Filtro aplicado: {{ filtro }}</p>{% endif %}
+            <h1 class="page-title h5 mb-0">Oportunidades encontradas</h1>
+            <p class="page-subtitle small mb-0">Selecionadas com base no seu perfil de busca.</p>
+            {% if filtro %}<p class="page-subtitle small mb-0">Perfil utilizado: {{ filtro }}</p>{% endif %}
         </div>
-        <a href="{% url 'rpa:exportar_csv' %}" class="btn btn-success btn-sm">Exportar CSV</a>
+        <a href="{% url 'rpa:exportar_csv' %}" class="btn btn-success btn-sm">Exportar oportunidades</a>
     </div>
     <div class="surface-body p-0">
         {% if processos %}
@@ -16,10 +17,10 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Numero</th>
-                    <th>Orgao</th>
-                    <th>Objeto</th>
-                    <th>Link</th>
+                    <th>Referencia</th>
+                    <th>Órgão</th>
+                    <th>Oportunidade</th>
+                    <th>Acesso</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,7 +32,7 @@
                     <td>{{ processo.objeto|default:'-' }}</td>
                     <td>
                         {% if processo.link %}
-                        <a href="{{ processo.link }}" target="_blank" rel="noopener noreferrer">Abrir processo</a>
+                        <a href="{{ processo.link }}" target="_blank" rel="noopener noreferrer">Ver detalhes</a>
                         {% else %}
                         -
                         {% endif %}
@@ -45,8 +46,8 @@
         <div class="surface-body">
             <div class="empty-state">
                 <i class="bi bi-search"></i>
-                <p class="mb-1">Nenhum resultado encontrado.</p>
-                <p class="small mb-0">Execute um filtro para visualizar processos aqui.</p>
+                <p class="mb-1">Nenhuma oportunidade encontrada com esse perfil.</p>
+                <p class="small mb-0">Tente ajustar seus critérios para ampliar os resultados.</p>
             </div>
         </div>
         {% endif %}

@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}Executar RPA{% endblock %}
+{% block title %}Buscar oportunidades{% endblock %}
 {% block content %}
 <section class="surface" style="max-width: 860px;">
     <div class="surface-header">
-        <h1 class="page-title h5 mb-0">Executar RPA</h1>
+        <h1 class="page-title h5 mb-0">Encontrar oportunidades agora</h1>
     </div>
     <div class="surface-body">
-        <p class="page-subtitle mb-3">Confirme os dados e inicie a automacao.</p>
+        <p class="page-subtitle mb-3">Confirme seu perfil e deixe o sistema buscar licitações relevantes para você.</p>
 
         <div class="form-grid mb-4">
             <div>
@@ -29,7 +29,7 @@
 
         <form method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Executar agora</button>
+            <button type="submit" class="btn btn-primary" data-loading-text="Buscando oportunidades para você...">Encontrar oportunidades agora</button>
             <a href="{% url 'filtros:dashboard' %}" class="btn btn-outline-secondary">Voltar</a>
         </form>
     </div>

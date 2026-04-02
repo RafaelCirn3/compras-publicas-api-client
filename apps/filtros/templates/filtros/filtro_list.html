@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Filtros{% endblock %}
+{% block title %}Perfis de busca{% endblock %}
 {% block content %}
 <section class="surface">
     <div class="surface-header">
         <div>
-            <h1 class="page-title h5 mb-0">Meus filtros</h1>
-            <p class="page-subtitle small">Organize e execute filtros com um clique.</p>
+            <h1 class="page-title h5 mb-0">Perfis de busca</h1>
+            <p class="page-subtitle small">Cada perfil representa exatamente o que você quer acompanhar.</p>
         </div>
-        <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Novo filtro</a>
+        <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Criar novo perfil</a>
     </div>
     <div class="surface-body p-0">
         {% if filtros %}
@@ -16,9 +16,9 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Objeto</th>
+                    <th>Perfil</th>
                     <th>UF</th>
-                    <th>Status</th>
+                    <th>Tipo de oportunidade</th>
                     <th>Criado em</th>
                     <th>Acoes</th>
                 </tr>
@@ -33,13 +33,16 @@
                     <td>{{ filtro.criado_em|date:'d/m/Y H:i' }}</td>
                     <td>
                         <div class="action-row">
-                            <a class="icon-btn" href="{% url 'rpa:executar' filtro.id %}" title="Executar RPA">
+                            <a class="icon-btn" href="{% url 'rpa:executar' filtro.id %}" title="Buscar oportunidades">
                                 <i class="bi bi-play-fill"></i>
                             </a>
-                            <a class="icon-btn" href="{% url 'filtros:update' filtro.id %}" title="Editar filtro">
+                            <button class="icon-btn" type="button" title="Duplicar perfil (em breve)" disabled aria-label="Duplicar perfil indisponível">
+                                <i class="bi bi-files"></i>
+                            </button>
+                            <a class="icon-btn" href="{% url 'filtros:update' filtro.id %}" title="Editar perfil">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <a class="icon-btn" href="{% url 'filtros:delete' filtro.id %}" title="Excluir filtro">
+                            <a class="icon-btn" href="{% url 'filtros:delete' filtro.id %}" title="Excluir perfil">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </div>
@@ -53,8 +56,8 @@
         <div class="surface-body">
             <div class="empty-state">
                 <i class="bi bi-funnel"></i>
-                <p class="mb-2">Nenhum filtro encontrado.</p>
-                <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Criar filtro</a>
+                <p class="mb-2">Nenhum perfil criado ainda.</p>
+                <a href="{% url 'filtros:create' %}" class="btn btn-primary btn-sm">Criar novo perfil</a>
             </div>
         </div>
         {% endif %}
