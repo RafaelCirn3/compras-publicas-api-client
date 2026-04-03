@@ -3,6 +3,7 @@
 #Documentos
 documents/
 
+staticfiles/
 # Python
 __pycache__/
 *.py[cod]
