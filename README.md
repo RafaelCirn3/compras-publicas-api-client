@@ -47,7 +47,7 @@ compras-publicas-api-client/
 ### 1. Clonar ou baixar o repositorio
 
 ```bash
-git clone <url-do-repo>
+git clone https://github.com/RafaelCirn3/compras-publicas-api-client
 cd compras-publicas-api-client
 ```
 
