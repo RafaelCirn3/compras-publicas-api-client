@@ -48,9 +48,6 @@
             </button>
 
             <div class="topbar-right">
-                <button class="icon-ghost" type="button" aria-label="Alertas e notificações">
-                    <i class="bi bi-bell"></i>
-                </button>
                 {% if request.user.is_authenticated %}
                 <div class="user-chip" aria-label="Usuário logado">
                     <span class="user-avatar">{{ request.user.first_name|default:request.user.username|slice:':1'|upper }}</span>

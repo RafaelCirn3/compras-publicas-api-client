@@ -102,8 +102,12 @@ a {
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    width: fit-content;
+    margin: 1rem 1.5rem 0 auto;
     padding: 1rem 1.5rem;
+    border: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(8px);
 }
@@ -562,6 +566,15 @@ button[disabled] {
 
     .app-content {
         padding: 1rem;
+    }
+
+    .app-topbar {
+        width: auto;
+        margin: 0;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
     }
 
     .metric-grid,
